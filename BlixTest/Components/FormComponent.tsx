@@ -1,8 +1,11 @@
-import { View, StyleSheet } from "react-native";
+import { useState } from "react";
+import { View, StyleSheet, Text } from "react-native";
 import InputWithLeftTextComponent from "./InputWithLeftTextComponent";
 import { Button, Checkbox } from "react-native-paper";
 
 const FormComponent = () => {
+  const [checked, setChecked] = useState<boolean>(false);
+
   return (
     <View style={styles.outerContainer}>
       <InputWithLeftTextComponent
@@ -19,6 +22,7 @@ const FormComponent = () => {
         inputType="textInput"
         label="Password"
         maxLength={50}
+        secureText={true}
       />
       <InputWithLeftTextComponent
         inputType="textInput"
@@ -35,7 +39,20 @@ const FormComponent = () => {
         label="Port"
         maxLength={4}
       />
-      <Checkbox status="checked" />
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          gap: 4,
+          alignSelf: "flex-end",
+        }}
+      >
+        <Text>Use SSL</Text>
+        <Checkbox
+          status={checked ? "checked" : "unchecked"}
+          onPress={() => setChecked(!checked)}
+        />
+      </View>
 
       <Button mode="contained" onPress={() => console.log("Pressed")}>
         Press me

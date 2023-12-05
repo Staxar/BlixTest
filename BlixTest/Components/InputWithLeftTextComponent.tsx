@@ -12,7 +12,7 @@ interface TextInputInterface {
   inputType: "list" | "textInput";
   label: string;
   maxLength: number;
-  //   password: string;
+  secureText?: boolean;
   //   serverAddress: string;
   //   serverPath?: string;
   //   port?: number;
@@ -21,6 +21,7 @@ function InputWithLeftTextComponent({
   inputType,
   label,
   maxLength,
+  secureText,
 }: TextInputInterface) {
   const [selectedItem, setSelectedItem] = useState<string>("");
   const [expanded, setExpanded] = useState(false);
@@ -50,7 +51,12 @@ function InputWithLeftTextComponent({
           <List.Item title="Manual" onPress={() => handleItemPress("Manual")} />
         </List.Accordion>
       ) : inputType === "textInput" ? (
-        <TextInput label={label} maxLength={maxLength} />
+        <TextInput
+          label={label}
+          maxLength={maxLength}
+          contentStyle={{ backgroundColor: "#fff" }}
+          secureTextEntry={secureText}
+        />
       ) : null}
     </View>
   );
