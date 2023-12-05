@@ -5,9 +5,11 @@ import { List, TextInput } from "react-native-paper";
 
 interface TextInputInterface {
   inputType: "list" | "textInput";
+  keyBoardType?: "numberInput" | "default";
   label: string;
   maxLength: number;
   secureText?: boolean;
+  contentType?: "username" | "URL" | "password" | "none";
 }
 
 interface ListInputInterface extends TextInputInterface {
@@ -17,7 +19,7 @@ interface ListInputInterface extends TextInputInterface {
   onChangeText?: Dispatch<SetStateAction<string>>;
 }
 
-function InputWithLeftTextComponent({
+function InputComponent({
   inputType,
   label,
   maxLength,
@@ -26,6 +28,8 @@ function InputWithLeftTextComponent({
   onSelectValue,
   value,
   onChangeText,
+  keyBoardType,
+  contentType,
 }: ListInputInterface) {
   const [expanded, setExpanded] = useState(false);
 
@@ -63,13 +67,15 @@ function InputWithLeftTextComponent({
           contentStyle={{ backgroundColor: "#fff" }}
           secureTextEntry={secureText}
           value={value || (selectedValue as string)}
-          onChangeText={
-            onChangeText || (onSelectValue as Dispatch<SetStateAction<string>>)
+          onChangeText={onChangeText}
+          keyboardType={
+            keyBoardType === "numberInput" ? "number-pad" : "default"
           }
+          textContentType={contentType}
         />
       )}
     </View>
   );
 }
 
-export default InputWithLeftTextComponent;
+export default InputComponent;
