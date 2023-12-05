@@ -66,7 +66,7 @@ function InputComponent({
           maxLength={maxLength}
           contentStyle={{ backgroundColor: "#fff" }}
           secureTextEntry={secureText}
-          value={value || (selectedValue as string)}
+          value={value}
           onChangeText={onChangeText}
           keyboardType={
             keyBoardType === "numberInput" ? "number-pad" : "default"

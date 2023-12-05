@@ -12,12 +12,6 @@ const FormComponent = () => {
   const [port, setPort] = useState<string>("");
   const [useSSL, setUseSSL] = useState<boolean>(false);
 
-  useEffect(() => {
-    setServerPath("");
-    setPort("");
-    setUseSSL(false);
-  }, [accountType]);
-
   const validateServerAddress = (address: string): boolean => {
     const urlRegex = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i;
     return urlRegex.test(address);
@@ -95,6 +89,34 @@ const FormComponent = () => {
       }
     }
   };
+
+  const renderAdvancedFields = () => (
+    <View>
+      <InputComponent
+        inputType="textInput"
+        label="Server Path"
+        maxLength={255}
+        value={serverPath}
+        onChangeText={setServerPath}
+      />
+      <InputComponent
+        inputType="textInput"
+        label="Port"
+        maxLength={4}
+        value={port}
+        onChangeText={setPort}
+        keyBoardType="numberInput"
+      />
+      <View style={styles.checkbox}>
+        <Text>Use SSL</Text>
+        <Checkbox
+          status={useSSL ? "checked" : "unchecked"}
+          onPress={() => setUseSSL(!useSSL)}
+        />
+      </View>
+    </View>
+  );
+
   return (
     <View style={styles.outerContainer}>
       <InputComponent
@@ -129,32 +151,9 @@ const FormComponent = () => {
         onChangeText={setServerAddress}
         contentType="URL"
       />
-      {accountType === "Advanced" && (
-        <View>
-          <InputComponent
-            inputType="textInput"
-            label="Server Path"
-            maxLength={255}
-            value={serverPath}
-            onChangeText={setServerPath}
-          />
-          <InputComponent
-            inputType="textInput"
-            label="Port"
-            maxLength={4}
-            value={port}
-            onChangeText={setPort}
-            keyBoardType="numberInput"
-          />
-          <View style={styles.checkbox}>
-            <Text>Use SSL</Text>
-            <Checkbox
-              status={useSSL ? "checked" : "unchecked"}
-              onPress={() => setUseSSL(!useSSL)}
-            />
-          </View>
-        </View>
-      )}
+      {accountType === "Advanced" || accountType === ""
+        ? renderAdvancedFields()
+        : null}
 
       <Button mode="contained" onPress={handlePress}>
         Press me
